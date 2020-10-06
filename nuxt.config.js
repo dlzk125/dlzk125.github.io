@@ -1,10 +1,11 @@
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
-
-  // Global page headers (https://go.nuxtjs.dev/config-head)
+  loading: false,
   head: {
-    title: 'james.github.io',
+    htmlAttrs: {
+      lang: 'ko',
+    },
+    title: "james's Page",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -15,31 +16,40 @@ export default {
     ]
   },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    { src: '@/assets/scss/common.scss', lang: 'scss' }
   ],
-
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-  ],
-
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
-
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-  ],
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
+  styleResources: {
+    scss: ['@/assets/scss/_config.scss']
+  },
   modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', {proxy: true}],
+    '@nuxtjs/style-resources',
+    '@nuxtjs/svg',
   ],
-
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  // polyfill: {
+  //   features: [
+  //     {require: 'element-scroll-polyfill'},
+  //     {require: 'element-remove-polyfill'},
+  //   ]
+  // },
+  plugins: [
+    { src: '~/plugins/lazy-image.js', ssr: false },
+    { src: '~/plugins/aos', ssr: false },
+  ],
   build: {
-  }
+    extractCSS: { ignoreOrder: true },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.(scss|css|vue)$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      },
+    },
+  },
 }

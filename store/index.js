@@ -2,14 +2,19 @@ export default {
   state: () => ({
     bodyClass: [],
     isDetail: false,
+    isCompleteDetail: false,
   }),
   actions: {
     controlBodyClass({ commit }, {controlClass, command = 'add', overriteClass}) {
       commit('SET_BODYClASS', {controlClass, command, overriteClass});
     },
     setIsDetail({ commit }, {isDetail}) {
-      commit('SET_BODYClASS', {controlClass: 'detail', command: 'toggle'});
+      commit('SET_BODYClASS', {controlClass: 'detail', command: isDetail ? 'add' : 'remove'});
+      commit('SET_ISCOMPLETEDETAIL', {isCompleteDetail: false});
       commit('SET_ISDETAIL', {isDetail});
+    },
+    setIsCompleteDetail({ commit }, {isCompleteDetail}) {
+      commit('SET_ISCOMPLETEDETAIL', {isCompleteDetail});
     }
   },
   mutations: {
@@ -39,7 +44,10 @@ export default {
     },
     SET_ISDETAIL(state, {isDetail}) {
       state.isDetail = isDetail;
-    }
+    },
+    SET_ISCOMPLETEDETAIL(state, {isCompleteDetail}) {
+      state.isCompleteDetail = isCompleteDetail;
+    },
   },
   getters: {
     bodyClass: (state) => {
@@ -47,6 +55,9 @@ export default {
     },
     isDetail: (state) => {
       return state.isDetail;
+    },
+    isCompleteDetail: (state) => {
+      return state.isCompleteDetail;
     },
   }
 }

@@ -37,19 +37,19 @@ export default {
     { src: '~/plugins/lazy-image.js', ssr: false },
     { src: '~/plugins/aos', ssr: false },
   ],
-  build: {
-    extractCSS: { ignoreOrder: true },
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          styles: {
-            name: 'styles',
-            test: /\.(scss|css|vue)$/,
-            chunks: 'all',
-            enforce: true
-          }
-        }
-      },
-    },
-  },
+  // build: {
+  //   extractCSS: { ignoreOrder: true },
+  //   optimization: {
+  //     splitChunks: {
+  //       cacheGroups: {
+  //         styles: {
+  //           name: 'styles',
+  //           test: /\.(scss|css|vue)$/,
+  //           chunks: 'all',
+  //           enforce: true
+  //         }
+  //       }
+  //     },
+  //   },
+  // },
 }

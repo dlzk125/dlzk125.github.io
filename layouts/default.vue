@@ -32,7 +32,8 @@
                 :is="GNBInfo.target ? 'a' : 'nuxt-link'"
                 v-bind="{
                   href: GNBInfo.target && GNBInfo.link ? GNBInfo.link : null,
-                  to: !GNBInfo.target && GNBInfo.link ? GNBInfo.link : null
+                  to: !GNBInfo.target && GNBInfo.link ? 
+                    isCurrentHash(GNBInfo.link) ? '/' : GNBInfo.link : null
                 }"
               >
                 <component :is="GNBInfo.ico"></component>
@@ -87,6 +88,13 @@ import IcoTwitter from '@/assets/svg/ico_twitter.svg?inline';
       ...mapGetters([
         'bodyClass', 'isDetail'
       ]),
+      isCurrentHash() {
+        return (hash) => {
+          const {matched} = this.$route;
+          const {path} = matched[0];
+          return path === hash;
+        }
+      }
     },
     data() {
       return {
@@ -131,9 +139,15 @@ import IcoTwitter from '@/assets/svg/ico_twitter.svg?inline';
       }
     },
     mounted () {
-      this.$refs.header.addEventListener('transitionend', () => {
-
-      })
+      this.$refs.header.addEventListener('transitionend', this.onDetailShowed)
+    },
+    beforeDestroy () {
+      this.$refs.header.removeEventListener('transitionend', this.onDetailShowed)
+    },
+    methods: {
+      onDetailShowed() {
+        this.$store.dispatch('setIsCompleteDetail', {isCompleteDetail: true});
+      }
     },
   }
 </script>
@@ -264,6 +278,14 @@ $minHeaderWidth: 440px;
 }
 .doc-main {
   margin-left: $minHeaderWidth;
-  padding: 80px 40px 0;
+  padding: 80px 60px 0;
+}
+.doc-footer {
+  padding: 20px;
+  margin-left: $minHeaderWidth;
+  border-top: 1px solid #f2f2f2;
+  font-size: 15px;
+  color: #919191;
+  text-align: center;
 }
 </style>

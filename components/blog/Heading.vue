@@ -1,16 +1,15 @@
 <template>
-  <strong class="tit_item" v-html="data"></strong>
+  <component :is="data.tag || 'h3'">{{data.subject}}</component>
 </template>
 
 <script>
   export default {
     props: {
       data: {
-        type: String,
-        default: ''
+        type: Object,
+        default: {}
       },
     },
-    
   }
 </script>
 

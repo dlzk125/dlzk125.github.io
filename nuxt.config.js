@@ -24,6 +24,7 @@ export default {
   },
   modules: [
     ['@nuxtjs/axios', {proxy: true}],
+    ['@nuxt/content'],
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
   ],
@@ -37,19 +38,24 @@ export default {
     { src: '~/plugins/lazy-image.js', ssr: false },
     { src: '~/plugins/aos', ssr: false },
   ],
-  // build: {
-  //   extractCSS: { ignoreOrder: true },
-  //   optimization: {
-  //     splitChunks: {
-  //       cacheGroups: {
-  //         styles: {
-  //           name: 'styles',
-  //           test: /\.(scss|css|vue)$/,
-  //           chunks: 'all',
-  //           enforce: true
-  //         }
-  //       }
-  //     },
-  //   },
-  // },
+  build: {
+    extractCSS: { ignoreOrder: true },
+    extend (config, { isDev, isClient }) {
+      config.node = {
+        fs: 'empty'
+      }
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.(scss|css|vue)$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      },
+    },
+  },
 }

@@ -54,7 +54,6 @@
     </header>
     <main class="doc-main">
       <article id="mainContent" class="content-article">
-        <h2 class="screen_out" v-if="isDetail">tech Ground 본문</h2>
         <Nuxt/>
       </article>
     </main>

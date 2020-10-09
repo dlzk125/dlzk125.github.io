@@ -1,6 +1,6 @@
 <template>
   <section class="sec_project">
-    <h3 class="tit_subject">Project List</h3>
+    <h2 class="tit_subject">Project List</h2>
     <ul class="list_project">
       <li v-for="(project, index) in projects" :key="`project${index}`">
           <div class="wrap_thumb">
